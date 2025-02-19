@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/core/theme/app_colors.dart';
 
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/presentation/widget/tasck_details_body.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
   const TaskDetailsScreen({super.key});
@@ -14,19 +15,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  // List<String> allTasks = [
-  //   "Learn JavaScript",
-  //   "Learn Flutter",
-  //   "Learn Python",
-  // ];
-
+  
   List<String> filteredTasks = [];
   List<String> allTasks = [];
   @override
-  // void initState() {
-  //   super.initState();
-  //   filteredTasks = List.from(allTasks);
-  // }
+
 
   void _filterTasks(String query) {
     setState(() {
@@ -87,45 +80,10 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-                  /// **شريط البحث + زر الإضافة**
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _searchController,
-                          onChanged: _filterTasks,
-                          focusNode: _searchFocusNode,
-                          decoration: InputDecoration(
-                            hintText: "Task...",
-                            filled: true,
-                            fillColor: AppColors.lightgrey,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: AppColors.green,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.add, color: Colors.white, size: 30),
-                          onPressed: _addTask, // عند الضغط، يتم إضافة المهمة
-                        ),
-                      ),
-                    ],
-                  ),
-
+                  TasckDetailsBody(),
                   const SizedBox(height: 20),
 
-                  /// **عرض قائمة المهام**
+                  
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
