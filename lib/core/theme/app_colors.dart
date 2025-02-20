@@ -10,6 +10,7 @@ class AppColors {
   static const Color lightblack = Color(0xff504646);
     static const Color rose = Color(0xffC4A49F);
     static const Color lightgrey = Color(0xffDBE2EF);
+    static const Color brown = Color(0xff4B332F);
 
 
 
