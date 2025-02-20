@@ -25,51 +25,55 @@ class _TasckDetailsBodyState extends State<TasckDetailsBody> {
           .toList();
     });
   }
-
   void _addTask() {
     if (_searchController.text.isNotEmpty) {
       setState(() {
-        allTasks
-            .add(_searchController.text);
-        filteredTasks = List.from(allTasks);
+        allTasks.add(_searchController.text); 
+        filteredTasks = List.from(allTasks); 
         _searchController.clear(); 
-        FocusScope.of(context).unfocus();
+        FocusScope.of(context).unfocus(); 
       });
     }
   }
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: TextField(
-            controller: _searchController,
-            onChanged: _filterTasks,
-            focusNode: _searchFocusNode,
-            decoration: InputDecoration(
-              hintText: "Task...",
-              filled: true,
-              fillColor: AppColors.lightgrey,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _searchController,
+                onChanged: _filterTasks,
+                focusNode: _searchFocusNode,
+                decoration: InputDecoration(
+                  hintText: "Task...",
+                  filled: true,
+                  fillColor: AppColors.lightgrey,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
               ),
             ),
-          ),
+            SizedBox(width: 10),
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppColors.green,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: IconButton(
+                icon: Icon(Icons.add, color: Colors.white, size: 30),
+                onPressed: _addTask, 
+              ),
+            ),
+          ],
         ),
-        SizedBox(width: 10),
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: AppColors.green,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: IconButton(
-            icon: Icon(Icons.add, color: Colors.white, size: 30),
-            onPressed: _addTask, // عند الضغط، يتم إضافة المهمة
-          ),
-        ),
+        const SizedBox(height: 20),
+        
       ],
     );
   }
