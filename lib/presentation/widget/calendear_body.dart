@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_list_app/core/theme/app_colors.dart';
 import 'package:todo_list_app/core/theme/app_style.dart';
 
 import 'package:todo_list_app/presentation/widget/table_calendear.dart';
 
-class CalendearBody extends StatelessWidget {
+class CalendearBody extends StatefulWidget {
   const CalendearBody({super.key});
 
+  @override
+  State<CalendearBody> createState() => _CalendearBodyState();
+}
+
+class _CalendearBodyState extends State<CalendearBody> {
+   String dayName = DateFormat('EEEE').format(DateTime.now()); // استخراج اسم اليوم
+  String formattedDate = DateFormat('d MMMM, yyyy').format(DateTime.now()); 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +40,7 @@ class CalendearBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  "Sanday",
+                  dayName,
                   style: TextStyle(
                       fontFamily: 'islandMoments',
                       fontSize: 35,
@@ -40,7 +48,7 @@ class CalendearBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "14,April,2025",
+                  formattedDate.toString(),
                   style: AppStyle.semibold.copyWith(
                       fontFamily: 'AbhayaLibre',
                       fontSize: 25,
