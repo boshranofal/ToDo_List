@@ -5,19 +5,22 @@ class TasksModel {
   final String title;
   final String description;
   final String date;
+ bool isCompleted;
 
   TasksModel({
     this.id,
     required this.title,
     required this.description,
     required this.date,
+    this.isCompleted = false,
   });
 Map<String, dynamic> toMap() {
   return {
     'id': id,
     'title': title,
     'description': description,
-    'date': DateFormat('yyyy-MM-dd').format(DateTime.parse(date)), 
+    'date': DateFormat('yyyy-MM-dd').format(DateTime.parse(date)),
+        'isCompleted': isCompleted ? 1 : 0,
   };
 }
 
@@ -27,6 +30,7 @@ Map<String, dynamic> toMap() {
       title: map['title'],
       description: map['description'],
       date: map['date'],
+      isCompleted:map['isCompleted'] == 1
     );
   }
 }
