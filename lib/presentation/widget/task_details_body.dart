@@ -13,122 +13,116 @@ class TaslDetailsBody extends StatefulWidget {
 }
 
 class _TaslDetailsBodyState extends State<TaslDetailsBody> {
-    List<TasksModel> filteredTasks = [];
+  List<TasksModel> filteredTasks = [];
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      await Provider.of<TaskProvider>(context, listen: false).getAllTasks();
+
+      Provider.of<TaskProvider>(context, listen: false)
+          .allTasks
+          .forEach((task) {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskProvider>(
-                    builder: (context, taskProvider, child) {
-                      return taskProvider.filteredTasks.isEmpty
-                          ? const Center(
-                              child: Text(
-                                "No tasks yet!",
-                                style:
-                                    TextStyle(fontSize: 18, color: Colors.grey),
-                              ),
-                            )
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: filteredTasks.length,
-                              itemBuilder: (context, index) {
-                                final task = taskProvider.filteredTasks[index];
+      builder: (context, taskProvider, child) {
+        final tasks = taskProvider.allTasks;
+         
 
-                                return Card(
-                                  color: AppColors.kreamy,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              task.title,
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SvgPicture.asset(
-                                              "assets/images/Vector.svg",
-                                              fit: BoxFit.contain,
-                                              width: 30,
-                                              height: 30,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              task.description.isNotEmpty
-                                                  ? task.description
-                                                  : "No description",
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black54,
-                                              ),
-                                            ),
-                                            SvgPicture.asset(
-                                              "assets/images/Vector (1).svg",
-                                              fit: BoxFit.cover,
-                                              width: 30,
-                                              height: 30,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text(
-                                              "Start date : ",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Text(
-                                              task.date,
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black87,
-                                              ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                Provider.of<TaskProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .removeTask(
-                                                        filteredTasks[index]
-                                                            .id!);
-                                              },
-                                              child: SvgPicture.asset(
-                                                "assets/images/Group 128.svg",
-                                                fit: BoxFit.cover,
-                                                width: 30,
-                                                height: 30,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                    },
+        return tasks.isEmpty
+            ? const Center(
+                child: Text(
+                  "No tasks yet!",
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              )
+            : ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  final task = tasks[index];
+
+                  return Card(
+                    color: AppColors.kreamy,
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                task.title,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                 Provider.of<TaskProvider>(context, listen: false)
+                                    .completeTask(task.id!);
+                                },
+                                child: SvgPicture.asset(
+                                  task.isCompleted?
+                                  "assets/images/Vectorgreen.svg"
+                                  :"assets/images/Vector.svg",
+                                  fit: BoxFit.contain,
+                                  width: 30,
+                                  height: 30,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Start date : ",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                task.date,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Provider.of<TaskProvider>(context,
+                                          listen: false)
+                                      .removeTask(task.id!);
+                                },
+                                child: SvgPicture.asset(
+                                  "assets/images/Group 128.svg",
+                                  fit: BoxFit.cover,
+                                  width: 30,
+                                  height: 30,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
                   );
+                },
+              );
+      },
+    );
   }
 }
