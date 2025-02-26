@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_list_app/core/theme/app_colors.dart';
 import 'package:todo_list_app/data/tasks_model.dart';
 import 'package:todo_list_app/presentation/widget/tasck_details_app_bar.dart';
 import 'package:todo_list_app/presentation/widget/task_details_body.dart';
-import 'package:todo_list_app/provider/task_provider.dart';
+
 
 class TaskDetailsScreen extends StatefulWidget {
   const TaskDetailsScreen({super.key});
@@ -17,14 +17,10 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   List<TasksModel> allTasks = [];
   List<TasksModel> filteredTasks = [];
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      Provider.of<TaskProvider>(context, listen: false).getAllTasks();
-    });
-  }
-
+  String dayName =
+      DateFormat('EEEE').format(DateTime.now()); 
+  String formattedDate = DateFormat('d MMMM, yyyy')
+      .format(DateTime.now()); 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +37,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Sunday",
+                    dayName,
                     style: TextStyle(
                       fontFamily: 'islandMoments',
                       fontSize: 35,
@@ -50,7 +46,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "14, April, 2025",
+                    formattedDate.toString(),
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontFamily: 'AbhayaLibre',
@@ -59,9 +55,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                    TaskDetailsAppBar(),
+                  TaskDetailsAppBar(),
                   const SizedBox(height: 20),
                   TaslDetailsBody(),
+                  const SizedBox(height: 50),
+                
                 ],
               ),
             ),
