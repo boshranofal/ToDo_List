@@ -13,6 +13,7 @@ class TaskDetailsAppBar extends StatefulWidget {
 }
 
 class _TaskDetailsAppBarState extends State<TaskDetailsAppBar> {
+
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
